@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!--
+        Schéma prévu pour être lu en lecture seule, et alimenté (brouillons en statut 0), par d'autres modules Maxcode
+        sans dépendance de code (Maxcode_AiAssistant s'en sert : il lit les questions publiées et écrit des brouillons d'origine ai_assistant). Garder ces
+        noms de tables et de colonnes stables.
+
+        Principe : une question a UN texte par défaut (vue de magasin 0) et, au besoin, un texte par vue de magasin.
+        Sa visibilité par vue de magasin est une liste à part (0 = toutes les vues) : une question sans AUCUNE ligne
+        n'est visible nulle part, qui écrit une question doit donc écrire au moins la ligne 0. Aucune ligne de
+        restriction par groupe de clients = visible pour tous.
+    -->
+    <table name="maxcode_faq_group" resource="default" engine="innodb" comment="Maxcode FAQ - groups">
+        <column xsi:type="int" name="group_id" unsigned="true" nullable="false" identity="true" comment="Group ID"/>
+        <column xsi:type="int" name="sort_order" nullable="false" default="0" comment="Sort order"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is active"/>
+        <column xsi:type="varchar" name="source" nullable="true" length="32" comment="Origin (import)"/>
+        <column xsi:type="varchar" name="source_ref" nullable="true" length="64" comment="Identifier in the origin"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created at"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true"
+                comment="Updated at"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="group_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAXCODE_FAQ_GROUP_SOURCE_SOURCE_REF">
+            <column name="source"/>
+            <column name="source_ref"/>
+        </constraint>
+    </table>
+
+    <table name="maxcode_faq_group_text" resource="default" engine="innodb" comment="Maxcode FAQ - group titles">
+        <column xsi:type="int" name="text_id" unsigned="true" nullable="false" identity="true" comment="Text ID"/>
+        <column xsi:type="int" name="group_id" unsigned="true" nullable="false" comment="Group ID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0"
+                comment="Store view ID (0 = default)"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="text_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAXCODE_FAQ_GROUP_TEXT_GROUP_ID_STORE_ID">
+            <column name="group_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_GROUP_TEXT_GROUP_ID_MAXCODE_FAQ_GROUP_GROUP_ID"
+                    table="maxcode_faq_group_text" column="group_id" referenceTable="maxcode_faq_group"
+                    referenceColumn="group_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_GROUP_TEXT_STORE_ID_STORE_STORE_ID"
+                    table="maxcode_faq_group_text" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+    </table>
+
+    <table name="maxcode_faq_question" resource="default" engine="innodb" comment="Maxcode FAQ - questions">
+        <column xsi:type="int" name="question_id" unsigned="true" nullable="false" identity="true"
+                comment="Question ID"/>
+        <column xsi:type="smallint" name="status" unsigned="true" nullable="false" default="0"
+                comment="0 = draft, 1 = active"/>
+        <column xsi:type="int" name="sort_order" nullable="false" default="0" comment="Sort order"/>
+        <column xsi:type="smallint" name="show_on_page" unsigned="true" nullable="false" default="1"
+                comment="Shown on the FAQ page"/>
+        <column xsi:type="varchar" name="source" nullable="true" length="32"
+                comment="Origin: mageprince, mageworx, ai_assistant... (empty = typed in the admin)"/>
+        <column xsi:type="varchar" name="source_ref" nullable="true" length="64" comment="Identifier in the origin"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created at"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true"
+                comment="Updated at"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="question_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAXCODE_FAQ_QUESTION_SOURCE_SOURCE_REF">
+            <column name="source"/>
+            <column name="source_ref"/>
+        </constraint>
+        <index referenceId="MAXCODE_FAQ_QUESTION_STATUS_SORT_ORDER" indexType="btree">
+            <column name="status"/>
+            <column name="sort_order"/>
+        </index>
+    </table>
+
+    <table name="maxcode_faq_question_text" resource="default" engine="innodb"
+           comment="Maxcode FAQ - question and answer texts">
+        <column xsi:type="int" name="text_id" unsigned="true" nullable="false" identity="true" comment="Text ID"/>
+        <column xsi:type="int" name="question_id" unsigned="true" nullable="false" comment="Question ID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0"
+                comment="Store view ID (0 = default)"/>
+        <column xsi:type="text" name="question" nullable="false" comment="Question (plain text)"/>
+        <column xsi:type="mediumtext" name="answer" nullable="false" comment="Answer (simple HTML)"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="text_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAXCODE_FAQ_QUESTION_TEXT_QUESTION_ID_STORE_ID">
+            <column name="question_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_TEXT_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID"
+                    table="maxcode_faq_question_text" column="question_id" referenceTable="maxcode_faq_question"
+                    referenceColumn="question_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_TEXT_STORE_ID_STORE_STORE_ID"
+                    table="maxcode_faq_question_text" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+    </table>
+
+    <table name="maxcode_faq_question_store" resource="default" engine="innodb"
+           comment="Maxcode FAQ - store views where a question is shown (0 = all)">
+        <column xsi:type="int" name="question_id" unsigned="true" nullable="false" comment="Question ID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store view ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="question_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_STORE_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID"
+                    table="maxcode_faq_question_store" column="question_id" referenceTable="maxcode_faq_question"
+                    referenceColumn="question_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_STORE_STORE_ID_STORE_STORE_ID"
+                    table="maxcode_faq_question_store" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <index referenceId="MAXCODE_FAQ_QUESTION_STORE_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+
+    <table name="maxcode_faq_question_group" resource="default" engine="innodb"
+           comment="Maxcode FAQ - groups of a question">
+        <column xsi:type="int" name="question_id" unsigned="true" nullable="false" comment="Question ID"/>
+        <column xsi:type="int" name="group_id" unsigned="true" nullable="false" comment="Group ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="question_id"/>
+            <column name="group_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_GROUP_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID"
+                    table="maxcode_faq_question_group" column="question_id" referenceTable="maxcode_faq_question"
+                    referenceColumn="question_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_GROUP_GROUP_ID_MAXCODE_FAQ_GROUP_GROUP_ID"
+                    table="maxcode_faq_question_group" column="group_id" referenceTable="maxcode_faq_group"
+                    referenceColumn="group_id" onDelete="CASCADE"/>
+        <index referenceId="MAXCODE_FAQ_QUESTION_GROUP_GROUP_ID" indexType="btree">
+            <column name="group_id"/>
+        </index>
+    </table>
+
+    <table name="maxcode_faq_question_customer_group" resource="default" engine="innodb"
+           comment="Maxcode FAQ - customer groups allowed to see a question (none = all)">
+        <column xsi:type="int" name="question_id" unsigned="true" nullable="false" comment="Question ID"/>
+        <column xsi:type="int" name="customer_group_id" unsigned="true" nullable="false"
+                comment="Customer group ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="question_id"/>
+            <column name="customer_group_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_QUESTION_CSTR_GROUP_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID"
+                    table="maxcode_faq_question_customer_group" column="question_id"
+                    referenceTable="maxcode_faq_question" referenceColumn="question_id" onDelete="CASCADE"/>
+        <!--
+            Pas de clé étrangère vers customer_group, volontairement : avec « ON DELETE CASCADE », supprimer un groupe de
+            clients effacerait la restriction d'une question qui n'était réservée qu'à lui, et elle deviendrait
+            publique. Sans clé, l'identifiant reste, ne correspond plus à aucun visiteur, et la question reste
+            invisible : l'échec est fermé.
+        -->
+        <index referenceId="MAXCODE_FAQ_QUESTION_CUSTOMER_GROUP_CUSTOMER_GROUP_ID" indexType="btree">
+            <column name="customer_group_id"/>
+        </index>
+    </table>
+
+    <table name="maxcode_faq_assignment" resource="default" engine="innodb"
+           comment="Maxcode FAQ - products, categories and CMS pages where a question is shown">
+        <column xsi:type="int" name="assignment_id" unsigned="true" nullable="false" identity="true"
+                comment="Assignment ID"/>
+        <column xsi:type="int" name="question_id" unsigned="true" nullable="false" comment="Question ID"/>
+        <column xsi:type="varchar" name="entity_type" nullable="false" length="16"
+                comment="product, category or cms_page"/>
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" comment="Product, category or page ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="assignment_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAXCODE_FAQ_ASSIGNMENT_QUESTION_ID_ENTITY_TYPE_ENTITY_ID">
+            <column name="question_id"/>
+            <column name="entity_type"/>
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAXCODE_FAQ_ASSIGNMENT_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID"
+                    table="maxcode_faq_assignment" column="question_id" referenceTable="maxcode_faq_question"
+                    referenceColumn="question_id" onDelete="CASCADE"/>
+        <index referenceId="MAXCODE_FAQ_ASSIGNMENT_ENTITY_TYPE_ENTITY_ID" indexType="btree">
+            <column name="entity_type"/>
+            <column name="entity_id"/>
+        </index>
+    </table>
+</schema>

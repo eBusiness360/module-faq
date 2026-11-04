@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <!-- Identifiant de route et préfixe d'URL identiques : la clé secrète des adresses est calculée dessus. -->
+        <route id="maxcode_faq" frontName="maxcode_faq">
+            <module name="Maxcode_Faq"/>
+        </route>
+    </router>
+</config>

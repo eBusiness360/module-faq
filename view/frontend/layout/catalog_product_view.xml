@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Les questions affectées à ce produit, en bas du contenu (le conteneur « content » existe dans tous les thèmes). -->
+        <referenceContainer name="content">
+            <block class="Maxcode\Faq\Block\Faq" name="maxcode.faq.product" after="-">
+                <arguments>
+                    <argument name="mode" xsi:type="string">entity</argument>
+                    <argument name="entity_type" xsi:type="string">product</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

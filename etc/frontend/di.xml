@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        Adresse de la page FAQ, réglable par vue de magasin : un routeur la reconnaît. Il passe (ordre 55) après le
+        routeur des réécritures d'adresse (ordre 20, qui sert aussi les pages CMS) : c'est pourquoi le réglage refuse une
+        adresse déjà servie par une page CMS ou une réécriture (Model/Config/Backend/UrlKey).
+    -->
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="maxcode_faq" xsi:type="array">
+                    <item name="class" xsi:type="string">Maxcode\Faq\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">55</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <!--
+        Place des questions dans n'importe quelle page ou bloc CMS (une page contact, un pied de page...) : un ou
+        plusieurs groupes, ou des questions précises. Équivalent du widget de Mageprince FAQ.
+    -->
+    <widget id="maxcode_faq" class="Maxcode\Faq\Block\Faq">
+        <label translate="true">FAQ (Maxcode)</label>
+        <description translate="true">Questions and answers of one or several FAQ groups.</description>
+        <parameters>
+            <parameter name="title" xsi:type="text" required="false" visible="true" sort_order="10">
+                <label translate="true">Title</label>
+            </parameter>
+            <parameter name="group_ids" xsi:type="multiselect" required="false" visible="true" sort_order="20"
+                       source_model="Maxcode\Faq\Model\Source\GroupOptions">
+                <label translate="true">FAQ groups</label>
+                <description translate="true">The questions of the chosen groups, in the order of the groups. Leave empty and list question IDs below instead.</description>
+            </parameter>
+            <parameter name="question_ids" xsi:type="text" required="false" visible="true" sort_order="30">
+                <label translate="true">Question IDs</label>
+                <description translate="true">Optional. Question numbers separated by commas (shown in the questions grid), added to the groups above.</description>
+            </parameter>
+            <parameter name="show_group_titles" xsi:type="select" required="false" visible="true" sort_order="40"
+                       source_model="Maxcode\Faq\Model\Source\InheritYesNo">
+                <label translate="true">Show group titles</label>
+            </parameter>
+            <parameter name="group_tabs" xsi:type="select" required="false" visible="true" sort_order="45"
+                       source_model="Maxcode\Faq\Model\Source\InheritYesNo">
+                <label translate="true">Filter by group</label>
+            </parameter>
+            <parameter name="expand_all" xsi:type="select" required="false" visible="true" sort_order="50"
+                       source_model="Maxcode\Faq\Model\Source\InheritYesNo">
+                <label translate="true">"Expand all" button</label>
+            </parameter>
+            <parameter name="limit" xsi:type="text" required="false" visible="true" sort_order="60">
+                <label translate="true">Maximum number of questions</label>
+                <description translate="true">Optional. Empty: all of them.</description>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">maxcode_faq_group_form.maxcode_faq_group_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="Maxcode\Faq\Block\Adminhtml\Group\BackButton"/>
+            <button name="delete" class="Maxcode\Faq\Block\Adminhtml\Group\DeleteButton"/>
+            <button name="save_continue" class="Maxcode\Faq\Block\Adminhtml\Group\SaveContinueButton"/>
+            <button name="save" class="Maxcode\Faq\Block\Adminhtml\Group\SaveButton"/>
+        </buttons>
+        <namespace>maxcode_faq_group_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>maxcode_faq_group_form.maxcode_faq_group_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="maxcode_faq_group_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="maxcode_faq/group/save"/>
+        </settings>
+        <dataProvider class="Maxcode\Faq\Ui\DataProvider\GroupForm" name="maxcode_faq_group_form_data_source">
+            <settings>
+                <requestFieldName>group_id</requestFieldName>
+                <primaryFieldName>group_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">Group</label>
+        </settings>
+        <field name="group_id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>group_id</dataScope>
+            </settings>
+        </field>
+        <field name="is_active" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Active</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="title" sortOrder="20" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+                <notice translate="true">The default title, shown when no translation exists for the store view.</notice>
+            </settings>
+        </field>
+        <field name="sort_order" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Sort order</label>
+                <dataScope>sort_order</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="translations_set" sortOrder="20">
+        <settings>
+            <collapsible>true</collapsible>
+            <opened>false</opened>
+            <label translate="true">Titles per store view</label>
+        </settings>
+        <dynamicRows name="translations">
+            <settings>
+                <addButtonLabel translate="true">Add a title</addButtonLabel>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <componentType>dynamicRows</componentType>
+                <dndConfig>
+                    <param name="enabled" xsi:type="boolean">false</param>
+                </dndConfig>
+                <label translate="true">Titles</label>
+                <recordTemplate>record</recordTemplate>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="store_id" formElement="select">
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>text</dataType>
+                        <label translate="true">Store view</label>
+                        <dataScope>store_id</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Maxcode\Faq\Model\Source\TranslationStores"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <field name="title" formElement="input">
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>text</dataType>
+                        <label translate="true">Title</label>
+                        <dataScope>title</dataScope>
+                    </settings>
+                </field>
+                <actionDelete>
+                    <settings>
+                        <additionalClasses>
+                            <class name="data-grid-actions-cell">true</class>
+                        </additionalClasses>
+                        <dataType>text</dataType>
+                        <label translate="true">Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+    </fieldset>
+</form>

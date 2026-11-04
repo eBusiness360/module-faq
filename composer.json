@@ -1,0 +1,33 @@
+{
+    "name": "maxcode/module-faq",
+    "description": "FAQ unique et indépendante pour Magento 2 : groupes et questions par vue de magasin, page FAQ, widget et blocs sur les fiches produit, catégories et pages CMS, balisage FAQPage, import depuis Mageprince FAQ et MageWorx FAQ. / One independent FAQ for Magento 2: groups and questions per store view, FAQ page, widget and blocks on product, category and CMS pages, FAQPage markup, import from Mageprince FAQ and MageWorx FAQ.",
+    "keywords": [
+        "magento2",
+        "faq",
+        "maxcode"
+    ],
+    "type": "magento2-module",
+    "license": "proprietary",
+    "version": "1.0.0",
+    "require": {
+        "php": "~8.2.0||~8.3.0||~8.4.0",
+        "magento/framework": "*",
+        "magento/module-backend": "*",
+        "magento/module-config": "*",
+        "magento/module-store": "*",
+        "magento/module-cms": "*",
+        "magento/module-catalog": "*",
+        "magento/module-customer": "*",
+        "magento/module-widget": "*",
+        "magento/module-ui": "*"
+    },
+    "suggest": {
+        "maxcode/module-ai-assistant": "An AI shopping assistant (it reads Mageprince and MageWorx FAQ today; a source for this module is planned)"
+    },
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {
+            "Maxcode\\Faq\\": ""
+        }
+    }
+}

@@ -1,0 +1,326 @@
+/**
+ * @author    eBusiness360 – Maxime LESGUILLIER aka Maxcode
+ * @copyright Copyright © 2026 eBusiness360 – Maxime LESGUILLIER aka Maxcode. Tous droits réservés.
+ * @package   Maxcode_Faq
+ *
+ * Mise en page : filtres par groupe en pastilles avec compteurs (ajoutés par JavaScript), puis, pour chaque groupe, son
+ * titre en majuscules à gauche et la liste des questions à droite (filet épais en haut, un filet fin entre les
+ * questions, bouton rond « + » qui devient « × » à l'ouverture). Sur un écran étroit, le titre passe au-dessus.
+ *
+ * Accessibilité : les textes et les contrôles ont leurs propres couleurs de fond (une surface blanche pour la liste,
+ * des pastilles à bordure franche), de sorte que le contraste ne dépend pas du fond de la page. Rapports avec les
+ * couleurs par défaut (WCAG 2.2, 4,5:1 demandés pour le texte, 3:1 pour les contrôles) : questions 18,1:1 et
+ * réponses 9,8:1 sur le blanc ; titres de groupe 12,2:1 sur le blanc et 10,1:1 sur un fond beige de page ; filtre
+ * actif et bouton « Tout ouvrir » 18,1:1 ; bordures des contrôles 4,8:1 sur le blanc et 4,0:1 sur beige ; anneau de
+ * focus 6,7:1 ; « × » blanc sur le bouton ouvert 7,8:1.
+ *
+ * Les couleurs se règlent en quelques lignes, par exemple :
+ *   .mcfaq { --mcfaq-accent: #8a1f55; --mcfaq-heading: #5c1238; }
+ * Gardez au moins 4,5:1 entre chaque texte et son fond, et 3:1 pour les bordures et les icônes.
+ * - --mcfaq-accent  : couleur du bouton « + » ; reprend celle du thème (--color-primary, --button-primary-bg,
+ *                     --color-brand, --primary ou --link-color, la première qui existe), sinon un bleu. Le tracé du « + »
+ *                     et le fond du bouton ouvert sont cette couleur assombrie d'un tiers (color-mix), pour que n'importe
+ *                     quelle couleur de thème, même claire, reste à 3:1 au moins sur le blanc et garde un « × » blanc lisible ;
+ * - --mcfaq-heading : titres de groupe ;
+ * - --mcfaq-strong  : texte, filtre actif, filets épais, bouton « Tout ouvrir » ;
+ * - --mcfaq-surface : fond de la liste.
+ */
+.mcfaq {
+    /* La couleur du thème : la première de ces variables qui existe (Hyvä, Luma et thèmes courants), sinon un bleu. */
+    --mcfaq-accent: var(--color-primary, var(--button-primary-bg, var(--color-brand, var(--primary, var(--link-color, #1e4fa3)))));
+    --mcfaq-accent-ink: var(--mcfaq-accent);
+    --mcfaq-accent-wash: #eceae4;
+    --mcfaq-heading: #14336b;
+    --mcfaq-strong: #12161c;
+    --mcfaq-muted: #3e4450;
+    --mcfaq-surface: #fff;
+    --mcfaq-soft: #eceae4;
+    --mcfaq-line: #d2d0c8;
+    --mcfaq-border: #6b7280;
+    --mcfaq-focus: #1d4ed8;
+    margin: 3rem 0 2rem;
+}
+
+/* Le titre à gauche et « Tout ouvrir » à droite, sur une seule ligne ; le reste prend toute la largeur. */
+.mcfaq {
+    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.mcfaq > * {
+    grid-column: 1 / -1;
+}
+
+/* Le « + » prend la couleur du thème, assombrie pour rester lisible quelle qu'elle soit. */
+@supports (color: color-mix(in srgb, red 50%, black)) {
+    .mcfaq {
+        --mcfaq-accent-ink: color-mix(in srgb, var(--mcfaq-accent) 68%, #000);
+        --mcfaq-accent-wash: color-mix(in srgb, var(--mcfaq-accent) 14%, #fff);
+    }
+}
+
+/* Seul dans son conteneur ou en tête, ou sur la page FAQ (le titre de la page est juste au-dessus) : pas d'espace en plus. */
+.mcfaq:first-child,
+.mcfaq--page {
+    margin-top: 0;
+}
+
+.mcfaq *,
+.mcfaq *::before,
+.mcfaq *::after {
+    box-sizing: border-box;
+}
+
+.mcfaq [hidden] {
+    display: none !important;
+}
+
+.mcfaq > .mcfaq__title {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0 0 0.75rem;
+}
+
+.mcfaq > .mcfaq__tools {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+    margin: 0 0 0.75rem 1rem;
+}
+
+.mcfaq__tools:empty {
+    display: none;
+}
+
+.mcfaq__toggle {
+    background: var(--mcfaq-surface);
+    border: 1px solid var(--mcfaq-strong);
+    border-radius: 999px;
+    color: var(--mcfaq-strong);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.88em;
+    font-weight: 700;
+    padding: 0.35em 1em;
+}
+
+.mcfaq__toggle:hover {
+    background: var(--mcfaq-strong);
+    color: #fff;
+}
+
+.mcfaq__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 1.25rem;
+}
+
+.mcfaq__tab {
+    align-items: center;
+    background: var(--mcfaq-surface);
+    border: 1px solid var(--mcfaq-border);
+    border-radius: 999px;
+    color: var(--mcfaq-strong);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-size: 0.92em;
+    font-weight: 700;
+    gap: 10px;
+    line-height: 1.1;
+    padding: 9px 17px;
+    text-align: left;
+}
+
+.mcfaq__tab:hover {
+    border-color: var(--mcfaq-strong);
+}
+
+.mcfaq__tab[aria-pressed="true"] {
+    background: var(--mcfaq-strong);
+    border-color: var(--mcfaq-strong);
+    color: #fff;
+}
+
+.mcfaq__count {
+    background: var(--mcfaq-soft);
+    border-radius: 999px;
+    color: var(--mcfaq-strong);
+    font-size: 0.8em;
+    font-weight: 800;
+    line-height: 1;
+    min-width: 1.9em;
+    padding: 0.3em 0.55em;
+    text-align: center;
+}
+
+.mcfaq__tab[aria-pressed="true"] .mcfaq__count {
+    background: #fff;
+    color: var(--mcfaq-strong);
+}
+
+.mcfaq__group {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 56px;
+    margin: 0 0 1.5rem;
+}
+
+.mcfaq__group-title {
+    color: var(--mcfaq-heading);
+    flex: 1 1 220px;
+    font-size: 1.25em;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+    margin: 0;
+    padding-top: 14px;
+    text-transform: uppercase;
+}
+
+.mcfaq__list {
+    background: var(--mcfaq-surface);
+    border-top: 2px solid var(--mcfaq-strong);
+    color: var(--mcfaq-strong);
+    flex: 999 1 520px;
+    min-width: 0;
+    padding: 0 20px;
+}
+
+.mcfaq__group--plain .mcfaq__list {
+    flex-basis: 100%;
+}
+
+.mcfaq__item {
+    border-bottom: 1px solid var(--mcfaq-line);
+}
+
+.mcfaq__item:last-child {
+    border-bottom: 0;
+}
+
+.mcfaq__question {
+    align-items: center;
+    color: var(--mcfaq-strong);
+    cursor: pointer;
+    display: flex;
+    font-size: 1.1em;
+    font-weight: 600;
+    gap: 20px;
+    justify-content: space-between;
+    line-height: 1.4;
+    list-style: none;
+    padding: 13px 0;
+}
+
+.mcfaq__question::-webkit-details-marker {
+    display: none;
+}
+
+.mcfaq__question::after {
+    background:
+        linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
+        linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat,
+        var(--mcfaq-surface);
+    border: 1px solid var(--mcfaq-accent-ink);
+    border-radius: 50%;
+    color: var(--mcfaq-accent-ink);
+    content: "";
+    flex: 0 0 30px;
+    height: 30px;
+    transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+    width: 30px;
+}
+
+.mcfaq__question:hover::after {
+    background-color: var(--mcfaq-accent-wash);
+}
+
+.mcfaq__item[open] > .mcfaq__question::after {
+    background-color: var(--mcfaq-accent-ink);
+    border-color: var(--mcfaq-accent-ink);
+    color: #fff;
+    transform: rotate(45deg);
+}
+
+.mcfaq__answer-inner {
+    background: var(--mcfaq-surface);
+    color: var(--mcfaq-muted);
+    font-size: 1.05em;
+    line-height: 1.65;
+    padding: 0 56px 16px 0;
+}
+
+.mcfaq__answer-inner a {
+    color: var(--mcfaq-heading);
+    text-decoration: underline;
+}
+
+.mcfaq__answer-inner > :first-child {
+    margin-top: 0;
+}
+
+.mcfaq__answer-inner > :last-child {
+    margin-bottom: 0;
+}
+
+.mcfaq__answer-inner img {
+    height: auto;
+    max-width: 100%;
+}
+
+.mcfaq__answer-inner table {
+    border-collapse: collapse;
+    max-width: 100%;
+}
+
+.mcfaq__answer-inner th,
+.mcfaq__answer-inner td {
+    border: 1px solid var(--mcfaq-line);
+    padding: 0.35em 0.6em;
+}
+
+.mcfaq__toggle:focus-visible,
+.mcfaq__tab:focus-visible,
+.mcfaq__question:focus-visible {
+    outline: 3px solid var(--mcfaq-focus);
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .mcfaq__group {
+        gap: 8px;
+    }
+
+    .mcfaq__group-title {
+        padding-top: 12px;
+    }
+
+    .mcfaq__list {
+        padding: 0 14px;
+    }
+
+    .mcfaq__answer-inner {
+        padding-right: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mcfaq__question::after {
+        transition: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .mcfaq__tab[aria-pressed="true"] {
+        border: 2px solid CanvasText;
+    }
+
+    .mcfaq__item[open] > .mcfaq__question::after {
+        border: 3px solid CanvasText;
+    }
+}

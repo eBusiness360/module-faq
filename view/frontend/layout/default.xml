@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Petit fichier (2 Ko) chargé partout : le widget peut se trouver dans n'importe quelle page ou bloc CMS. -->
+        <css src="Maxcode_Faq::css/faq.css"/>
+    </head>
+</page>

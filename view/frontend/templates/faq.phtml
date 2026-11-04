@@ -1,0 +1,149 @@
+<?php
+/**
+ * @author    eBusiness360 – Maxime LESGUILLIER aka Maxcode
+ * @copyright Copyright © 2026 eBusiness360 – Maxime LESGUILLIER aka Maxcode. Tous droits réservés.
+ * @license   Licence propriétaire — voir le fichier LICENSE
+ * @package   Maxcode_Faq
+ */
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+use Maxcode\Faq\Block\Faq;
+
+/**
+ * Accordéon FAQ : des balises details/summary, sans JavaScript obligatoire. Les réponses ont été nettoyées côté
+ * serveur (liste blanche de balises) : elles sont écrites telles quelles. Le JavaScript, s'il tourne, ajoute seulement
+ * le bouton « Tout ouvrir », les filtres par groupe (pastilles avec compteurs) et l'ouverture d'une question depuis
+ * l'ancre de l'adresse ; sans lui, tous les groupes et toutes les questions sont visibles et utilisables.
+ *
+ * @var Faq                $block
+ * @var Escaper            $escaper
+ * @var SecureHtmlRenderer $secureRenderer
+ */
+$sections = $block->getSections();
+$title = $block->getTitle();
+$level = $block->getGroupHeadingLevel();
+$expandAll = $block->showExpandAll();
+$tabs = $block->showGroupTabs();
+$jsonLd = $block->getJsonLd();
+$domId = $block->getDomId();
+?>
+<section class="mcfaq<?= $block->getData('mode') === Faq::MODE_PAGE ? ' mcfaq--page' : '' ?>" id="<?= $escaper->escapeHtmlAttr($domId) ?>"
+    <?php if ($expandAll): ?>
+        data-expand-all="1"
+        data-label-open="<?= $escaper->escapeHtmlAttr(__('Expand all')) ?>"
+        data-label-close="<?= $escaper->escapeHtmlAttr(__('Collapse all')) ?>"
+    <?php endif; ?>
+    <?php if ($tabs): ?>
+        data-group-tabs="1"
+        data-label-all="<?= $escaper->escapeHtmlAttr(__('All questions')) ?>"
+        data-label-topics="<?= $escaper->escapeHtmlAttr(__('Topics')) ?>"
+    <?php endif; ?>
+    <?php if ($title !== ''): ?>aria-labelledby="<?= $escaper->escapeHtmlAttr($domId) ?>-title"<?php endif; ?>>
+    <?php if ($title !== ''): ?>
+        <h2 class="mcfaq__title" id="<?= $escaper->escapeHtmlAttr($domId) ?>-title"><?= $escaper->escapeHtml($title) ?></h2>
+    <?php endif; ?>
+    <?php if ($expandAll): ?><div class="mcfaq__tools"></div><?php endif; ?>
+    <?php foreach ($sections as $section): ?>
+        <div class="mcfaq__group<?= $section['title'] === '' ? ' mcfaq__group--plain' : '' ?>"
+            <?php if ($section['title'] !== ''): ?>data-title="<?= $escaper->escapeHtmlAttr($section['title']) ?>"<?php endif; ?>>
+            <?php if ($section['title'] !== ''): ?>
+                <h<?= (int) $level ?> class="mcfaq__group-title"><?= $escaper->escapeHtml($section['title']) ?></h<?= (int) $level ?>>
+            <?php endif; ?>
+            <div class="mcfaq__list">
+                <?php foreach ($section['questions'] as $question): ?>
+                    <?php $anchor = $block->claimAnchor((int) $question['id']) ? 'mcfaq-q' . (int) $question['id'] : ''; ?>
+                    <details class="mcfaq__item" data-qid="<?= (int) $question['id'] ?>"<?php if ($anchor !== ''): ?> id="<?= $escaper->escapeHtmlAttr($anchor) ?>"<?php endif; ?>>
+                        <summary class="mcfaq__question"><span class="mcfaq__question-text"><?= $escaper->escapeHtml($question['question']) ?></span></summary>
+                        <div class="mcfaq__answer"><div class="mcfaq__answer-inner"><?= /* @noEscape */ $question['answer'] ?></div></div>
+                    </details>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</section>
+<?php if ($jsonLd !== ''): ?>
+    <script type="application/ld+json"><?= /* @noEscape */ $jsonLd ?></script>
+<?php endif; ?>
+<?php if ($block->claimScript()): ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag(
+        'script',
+        [],
+        <<<'JS'
+(function () {
+    function uniqueCount(scope) {
+        var ids = {};
+        scope.querySelectorAll('details.mcfaq__item').forEach(function (item) { ids[item.getAttribute('data-qid')] = true; });
+        return Object.keys(ids).length;
+    }
+    function badge(count) {
+        var span = document.createElement('span');
+        span.className = 'mcfaq__count';
+        span.textContent = String(count);
+        return span;
+    }
+    function addTabs(root) {
+        var groups = root.querySelectorAll('.mcfaq__group[data-title]');
+        if (!root.hasAttribute('data-group-tabs') || groups.length < 2) { return; }
+        var bar = document.createElement('div');
+        bar.className = 'mcfaq__tabs';
+        bar.setAttribute('role', 'group');
+        bar.setAttribute('aria-label', root.getAttribute('data-label-topics'));
+        var buttons = [];
+        var plain = root.querySelectorAll('.mcfaq__group--plain');
+        function select(index) {
+            buttons.forEach(function (button, i) { button.setAttribute('aria-pressed', i === index ? 'true' : 'false'); });
+            groups.forEach(function (group, i) { group.hidden = index > 0 && i !== index - 1; });
+            // Les questions sans groupe n'appartiennent qu'à « Toutes ».
+            plain.forEach(function (group) { group.hidden = index > 0; });
+        }
+        [root.getAttribute('data-label-all')].concat(Array.prototype.map.call(groups, function (g) { return g.getAttribute('data-title'); }))
+            .forEach(function (label, index) {
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'mcfaq__tab';
+                button.appendChild(document.createTextNode(label));
+                button.appendChild(badge(index === 0 ? uniqueCount(root) : uniqueCount(groups[index - 1])));
+                button.addEventListener('click', function () { select(index); });
+                buttons.push(button);
+                bar.appendChild(button);
+            });
+        groups[0].parentNode.insertBefore(bar, groups[0]);
+        select(0);
+    }
+    function init() {
+        document.querySelectorAll('.mcfaq').forEach(function (root) {
+            if (root.getAttribute('data-ready')) { return; }
+            root.setAttribute('data-ready', '1');
+            var items = root.querySelectorAll('details.mcfaq__item');
+            var bar = root.querySelector('.mcfaq__tools');
+            if (root.hasAttribute('data-expand-all') && bar && items.length > 1) {
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'mcfaq__toggle';
+                button.setAttribute('aria-pressed', 'false');
+                button.textContent = root.getAttribute('data-label-open');
+                button.addEventListener('click', function () {
+                    var open = button.getAttribute('aria-pressed') !== 'true';
+                    items.forEach(function (item) { item.open = open; });
+                    button.setAttribute('aria-pressed', open ? 'true' : 'false');
+                    button.textContent = root.getAttribute(open ? 'data-label-close' : 'data-label-open');
+                });
+                bar.appendChild(button);
+            }
+            addTabs(root);
+            if (window.location.hash.length > 1) {
+                var id = window.location.hash.slice(1);
+                try { id = decodeURIComponent(id); } catch (error) { /* adresse mal formée : on garde le texte brut */ }
+                var target = document.getElementById(id);
+                if (target && target.tagName === 'DETAILS' && root.contains(target)) { target.open = true; }
+            }
+        });
+    }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+JS,
+        false
+    ) ?>
+<?php endif; ?>

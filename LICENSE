@@ -1,0 +1,142 @@
+Maxcode_Faq — Contrat de licence utilisateur final (CLUF)
+Maxcode_Faq — End-User License Agreement (EULA)
+Copyright © 2026 eBusiness360 – Maxime LESGUILLIER aka Maxcode. Tous droits réservés. / All rights reserved.
+
+Ce fichier contient la licence en français puis en anglais.
+This file contains the license in French, then in English.
+En cas de divergence entre les deux versions, la version française prévaut.
+In case of any discrepancy between the two versions, the French version prevails.
+
+
+============================  FRANÇAIS  ============================
+
+Le présent contrat régit l'utilisation du module logiciel « Maxcode_Faq »
+(le « Logiciel ») pour Magento 2. Il constitue un accord juridique entre vous, personne
+physique ou morale (le « Licencié »), et eBusiness360 – Maxime LESGUILLIER aka Maxcode
+(le « Concédant »). En achetant, en installant ou en utilisant le Logiciel, le Licencié
+reconnaît avoir lu ce contrat et en accepter les termes. À défaut d'acceptation, le
+Logiciel ne doit être ni installé ni utilisé.
+
+1. CONCESSION DE LICENCE
+   En contrepartie de l'acquisition régulière du Logiciel :
+   a) Le Licencié reçoit l'intégralité du code source du Logiciel.
+   b) La licence est valable pour UNE (1) seule installation Magento de production et un
+      nombre illimité d'installations de test, de développement et de préproduction qui lui
+      sont rattachées. Une installation Magento en multi-boutiques (plusieurs vitrines ou
+      domaines desservis par la même installation) est couverte par une seule licence.
+   c) Le Licencié est autorisé à adapter et personnaliser le Logiciel pour ses propres besoins
+      sur l'installation licenciée.
+   d) Chaque installation Magento de production supplémentaire nécessite l'acquisition d'une
+      licence distincte.
+
+2. MISES À JOUR ET SUPPORT
+   a) L'acquisition du Logiciel inclut douze (12) mois de mises à jour et de support technique
+      à compter de la date d'achat.
+   b) À l'expiration de cette période, le Licencié conserve le droit d'utiliser de façon
+      perpétuelle la version du Logiciel acquise, conformément à l'article 1, mais ne bénéficie
+      plus des mises à jour ni du support.
+   c) Le renouvellement des mises à jour et du support pour une nouvelle période de douze (12)
+      mois est proposé au tarif de cinquante pour cent (50 %) du prix du Logiciel en vigueur à
+      la date du renouvellement.
+
+3. RESTRICTIONS
+   Le Licencié s'interdit, en tout ou partie, à titre gratuit ou onéreux :
+   a) de revendre, distribuer, publier, sous-licencier, louer, prêter, céder ou mettre le
+      Logiciel à la disposition de tout tiers ;
+   b) de réutiliser tout ou partie du code dans un autre logiciel, produit ou site web ;
+   c) de placer le Logiciel sur un serveur permettant sa diffusion via un réseau public ou
+      Internet à des fins de distribution ;
+   d) de supprimer, masquer ou altérer les mentions de propriété, de copyright ou le présent
+      contrat.
+   Toute utilisation non expressément autorisée par le présent contrat est interdite.
+
+4. PROPRIÉTÉ INTELLECTUELLE
+   Le Logiciel demeure la propriété exclusive du Concédant et est protégé par le droit de la
+   propriété intellectuelle ainsi que par les traités internationaux applicables. La présente
+   licence ne transfère au Licencié aucun droit de propriété, hormis le droit d'utilisation
+   défini aux articles 1 et 2.
+
+5. RÉSILIATION
+   En cas de manquement du Licencié à l'un quelconque des termes du présent contrat, la
+   licence est résiliée de plein droit, sans préjudice des autres droits du Concédant. Le
+   Licencié doit alors cesser toute utilisation du Logiciel et en détruire toutes les copies.
+   Aucun remboursement n'est dû au titre de la résiliation.
+
+6. ABSENCE DE GARANTIE
+   LE LOGICIEL EST FOURNI « EN L'ÉTAT », SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE,
+   NOTAMMENT SANS AUCUNE GARANTIE DE QUALITÉ MARCHANDE NI D'ADÉQUATION À UN USAGE PARTICULIER.
+
+7. LIMITATION DE RESPONSABILITÉ
+   EN AUCUN CAS LE CONCÉDANT NE POURRA ÊTRE TENU RESPONSABLE D'UN QUELCONQUE DOMMAGE, DIRECT
+   OU INDIRECT (NOTAMMENT PERTE DE PROFIT, INTERRUPTION D'ACTIVITÉ OU PERTE DE DONNÉES),
+   RÉSULTANT DE L'UTILISATION OU DE L'IMPOSSIBILITÉ D'UTILISER LE LOGICIEL, MÊME S'IL A ÉTÉ
+   INFORMÉ DE L'ÉVENTUALITÉ DE TELS DOMMAGES.
+
+8. DROIT APPLICABLE
+   Le présent contrat est régi par le droit français. Tout litige relatif à sa validité, son
+   interprétation ou son exécution relève de la compétence exclusive des tribunaux français.
+
+
+============================  ENGLISH  ============================
+
+This agreement governs the use of the "Maxcode_Faq" software module (the
+"Software") for Magento 2. It is a legal agreement between you, an individual or a legal
+entity (the "Licensee"), and eBusiness360 – Maxime LESGUILLIER aka Maxcode (the "Licensor").
+By purchasing, installing or using the Software, the Licensee acknowledges having read this
+agreement and accepts its terms. If the Licensee does not accept them, the Software must not
+be installed or used.
+
+1. GRANT OF LICENSE
+   In consideration of the lawful acquisition of the Software:
+   a) The Licensee receives the complete source code of the Software.
+   b) The license is valid for ONE (1) single Magento production installation and an unlimited
+      number of related test, development and staging installations. A Magento installation in
+      a multi-store setup (several storefronts or domains served by the same installation) is
+      covered by a single license.
+   c) The Licensee may adapt and customize the Software for its own needs on the licensed
+      installation.
+   d) Each additional Magento production installation requires the purchase of a separate
+      license.
+
+2. UPDATES AND SUPPORT
+   a) The purchase of the Software includes twelve (12) months of updates and technical support
+      from the date of purchase.
+   b) After this period, the Licensee retains the right to use the acquired version of the
+      Software perpetually, in accordance with section 1, but no longer benefits from updates or
+      support.
+   c) Renewal of updates and support for a further twelve (12) month period is offered at fifty
+      percent (50%) of the price of the Software in effect on the renewal date.
+
+3. RESTRICTIONS
+   The Licensee shall not, in whole or in part, whether free of charge or for a fee:
+   a) resell, distribute, publish, sublicense, rent, lease, lend, assign or make the Software
+      available to any third party;
+   b) reuse all or part of the code in any other software, product or website;
+   c) place the Software on a server allowing its distribution over a public network or the
+      Internet for distribution purposes;
+   d) remove, obscure or alter any proprietary, copyright or license notices, or this agreement.
+   Any use not expressly authorized by this agreement is prohibited.
+
+4. INTELLECTUAL PROPERTY
+   The Software remains the exclusive property of the Licensor and is protected by intellectual
+   property law and applicable international treaties. This license transfers no ownership right
+   to the Licensee other than the right of use defined in sections 1 and 2.
+
+5. TERMINATION
+   In the event of any breach by the Licensee of any term of this agreement, the license
+   terminates automatically, without prejudice to any other rights of the Licensor. The Licensee
+   must then cease all use of the Software and destroy all copies thereof. No refund is due upon
+   termination.
+
+6. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+   WITHOUT LIMITATION ANY WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+7. LIMITATION OF LIABILITY
+   IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY DAMAGES, DIRECT OR INDIRECT (INCLUDING LOSS
+   OF PROFIT, BUSINESS INTERRUPTION OR LOSS OF DATA), ARISING FROM THE USE OR INABILITY TO USE
+   THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+8. GOVERNING LAW
+   This agreement is governed by French law. Any dispute relating to its validity, interpretation
+   or performance falls under the exclusive jurisdiction of the French courts.

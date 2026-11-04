@@ -1,0 +1,122 @@
+{
+    "maxcode_faq_group": {
+        "column": {
+            "group_id": true,
+            "sort_order": true,
+            "is_active": true,
+            "source": true,
+            "source_ref": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_GROUP_SOURCE_SOURCE_REF": true
+        }
+    },
+    "maxcode_faq_group_text": {
+        "column": {
+            "text_id": true,
+            "group_id": true,
+            "store_id": true,
+            "title": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_GROUP_TEXT_GROUP_ID_STORE_ID": true,
+            "MAXCODE_FAQ_GROUP_TEXT_GROUP_ID_MAXCODE_FAQ_GROUP_GROUP_ID": true,
+            "MAXCODE_FAQ_GROUP_TEXT_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "maxcode_faq_question": {
+        "column": {
+            "question_id": true,
+            "status": true,
+            "sort_order": true,
+            "show_on_page": true,
+            "source": true,
+            "source_ref": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "MAXCODE_FAQ_QUESTION_STATUS_SORT_ORDER": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_QUESTION_SOURCE_SOURCE_REF": true
+        }
+    },
+    "maxcode_faq_question_text": {
+        "column": {
+            "text_id": true,
+            "question_id": true,
+            "store_id": true,
+            "question": true,
+            "answer": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_QUESTION_TEXT_QUESTION_ID_STORE_ID": true,
+            "MAXCODE_FAQ_QUESTION_TEXT_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID": true,
+            "MAXCODE_FAQ_QUESTION_TEXT_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "maxcode_faq_question_store": {
+        "column": {
+            "question_id": true,
+            "store_id": true
+        },
+        "index": {
+            "MAXCODE_FAQ_QUESTION_STORE_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_QUESTION_STORE_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID": true,
+            "MAXCODE_FAQ_QUESTION_STORE_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "maxcode_faq_question_group": {
+        "column": {
+            "question_id": true,
+            "group_id": true
+        },
+        "index": {
+            "MAXCODE_FAQ_QUESTION_GROUP_GROUP_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_QUESTION_GROUP_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID": true,
+            "MAXCODE_FAQ_QUESTION_GROUP_GROUP_ID_MAXCODE_FAQ_GROUP_GROUP_ID": true
+        }
+    },
+    "maxcode_faq_question_customer_group": {
+        "column": {
+            "question_id": true,
+            "customer_group_id": true
+        },
+        "index": {
+            "MAXCODE_FAQ_QUESTION_CUSTOMER_GROUP_CUSTOMER_GROUP_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_QUESTION_CSTR_GROUP_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID": true
+        }
+    },
+    "maxcode_faq_assignment": {
+        "column": {
+            "assignment_id": true,
+            "question_id": true,
+            "entity_type": true,
+            "entity_id": true
+        },
+        "index": {
+            "MAXCODE_FAQ_ASSIGNMENT_ENTITY_TYPE_ENTITY_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAXCODE_FAQ_ASSIGNMENT_QUESTION_ID_ENTITY_TYPE_ENTITY_ID": true,
+            "MAXCODE_FAQ_ASSIGNMENT_QUESTION_ID_MAXCODE_FAQ_QUESTION_QUESTION_ID": true
+        }
+    }
+}

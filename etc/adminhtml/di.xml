@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Sources de données des deux grilles. -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="maxcode_faq_question_listing_data_source" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Question\Grid\Collection</item>
+                <item name="maxcode_faq_group_listing_data_source" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Group\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Maxcode\Faq\Model\ResourceModel\Question\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">maxcode_faq_question</argument>
+            <argument name="resourceModel" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Question</argument>
+        </arguments>
+    </type>
+    <type name="Maxcode\Faq\Model\ResourceModel\Group\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">maxcode_faq_group</argument>
+            <argument name="resourceModel" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Group</argument>
+        </arguments>
+    </type>
+
+    <!-- Colonnes d'actions des grilles. -->
+    <virtualType name="Maxcode\Faq\Ui\Component\Listing\Column\QuestionActions" type="Maxcode\Faq\Ui\Component\Listing\Column\Actions">
+        <arguments>
+            <argument name="route" xsi:type="string">maxcode_faq/question</argument>
+            <argument name="idField" xsi:type="string">question_id</argument>
+            <argument name="idParam" xsi:type="string">question_id</argument>
+            <argument name="labelField" xsi:type="string">question</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Ui\Component\Listing\Column\GroupActions" type="Maxcode\Faq\Ui\Component\Listing\Column\Actions">
+        <arguments>
+            <argument name="route" xsi:type="string">maxcode_faq/group</argument>
+            <argument name="idField" xsi:type="string">group_id</argument>
+            <argument name="idParam" xsi:type="string">group_id</argument>
+            <argument name="labelField" xsi:type="string">title</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Boutons des formulaires. -->
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Question\BackButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">back</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/question</argument>
+            <argument name="idParam" xsi:type="string">question_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_question_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Question\DeleteButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">delete</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/question</argument>
+            <argument name="idParam" xsi:type="string">question_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_question_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Question\SaveButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">save</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/question</argument>
+            <argument name="idParam" xsi:type="string">question_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_question_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Question\SaveContinueButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">save_continue</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/question</argument>
+            <argument name="idParam" xsi:type="string">question_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_question_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Group\BackButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">back</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/group</argument>
+            <argument name="idParam" xsi:type="string">group_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_group_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Group\DeleteButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">delete</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/group</argument>
+            <argument name="idParam" xsi:type="string">group_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_group_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Group\SaveButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">save</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/group</argument>
+            <argument name="idParam" xsi:type="string">group_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_group_form</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Maxcode\Faq\Block\Adminhtml\Group\SaveContinueButton" type="Maxcode\Faq\Block\Adminhtml\FormButton">
+        <arguments>
+            <argument name="type" xsi:type="string">save_continue</argument>
+            <argument name="route" xsi:type="string">maxcode_faq/group</argument>
+            <argument name="idParam" xsi:type="string">group_id</argument>
+            <argument name="form" xsi:type="string">maxcode_faq_group_form</argument>
+        </arguments>
+    </virtualType>
+
+    <!--
+        Déclaration pour Maxcode_Core : bloc « À propos » en haut de la page de configuration du module
+        (onglet Maxcode). Sans Maxcode_Core, ce bloc est simplement ignoré.
+    -->
+    <type name="Maxcode\Core\Model\Intro\IntroPool">
+        <arguments>
+            <argument name="intros" xsi:type="array">
+                <item name="maxcode_faq" xsi:type="array">
+                    <item name="section" xsi:type="string">maxcode_faq</item>
+                    <item name="module" xsi:type="string">Maxcode_Faq</item>
+                    <item name="points" xsi:type="array">
+                        <item name="0" xsi:type="string">One FAQ for the whole store: groups and questions, per store view, managed under Content > FAQ.</item>
+                        <item name="1" xsi:type="string">Shown on a FAQ page, on product, category and CMS pages, or anywhere with the "FAQ (Maxcode)" widget.</item>
+                        <item name="2" xsi:type="string">Import from Mageprince FAQ and MageWorx FAQ with the command maxcode:faq:import.</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

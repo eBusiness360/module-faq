@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">maxcode_faq_question_form.maxcode_faq_question_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="Maxcode\Faq\Block\Adminhtml\Question\BackButton"/>
+            <button name="delete" class="Maxcode\Faq\Block\Adminhtml\Question\DeleteButton"/>
+            <button name="save_continue" class="Maxcode\Faq\Block\Adminhtml\Question\SaveContinueButton"/>
+            <button name="save" class="Maxcode\Faq\Block\Adminhtml\Question\SaveButton"/>
+        </buttons>
+        <namespace>maxcode_faq_question_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>maxcode_faq_question_form.maxcode_faq_question_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="maxcode_faq_question_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="maxcode_faq/question/save"/>
+        </settings>
+        <dataProvider class="Maxcode\Faq\Ui\DataProvider\QuestionForm" name="maxcode_faq_question_form_data_source">
+            <settings>
+                <requestFieldName>question_id</requestFieldName>
+                <primaryFieldName>question_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">Question and answer</label>
+        </settings>
+        <field name="question_id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>question_id</dataScope>
+            </settings>
+        </field>
+        <field name="status" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Status</label>
+                <dataScope>status</dataScope>
+                <notice translate="true">A draft is never shown to shoppers. An active question needs an answer.</notice>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Maxcode\Faq\Model\Source\Status"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="question" sortOrder="20" formElement="textarea">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Question</label>
+                <dataScope>question</dataScope>
+                <notice translate="true">Plain text. This is the default text, shown in every store view that has no translation below.</notice>
+            </settings>
+            <formElements>
+                <textarea>
+                    <settings>
+                        <rows>2</rows>
+                    </settings>
+                </textarea>
+            </formElements>
+        </field>
+        <field name="answer" sortOrder="30" formElement="wysiwyg">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+                        <item name="toggle_button" xsi:type="boolean">true</item>
+                        <item name="add_variables" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <dataType>text</dataType>
+                <label translate="true">Answer</label>
+                <dataScope>answer</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+        <field name="group_ids" sortOrder="40" formElement="multiselect">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Groups</label>
+                <dataScope>group_ids</dataScope>
+                <notice translate="true">The question appears under each chosen group. Manage the groups under Content > FAQ > Groups.</notice>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Maxcode\Faq\Model\Source\GroupOptions"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <dynamicRows name="translations" sortOrder="45">
+            <settings>
+                <addButtonLabel translate="true">Add a translation</addButtonLabel>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <componentType>dynamicRows</componentType>
+                <dndConfig>
+                    <param name="enabled" xsi:type="boolean">false</param>
+                </dndConfig>
+                <label translate="true">Translations per store view</label>
+                <recordTemplate>record</recordTemplate>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="store_id" formElement="select">
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>text</dataType>
+                        <label translate="true">Store view</label>
+                        <dataScope>store_id</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Maxcode\Faq\Model\Source\TranslationStores"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <field name="question" formElement="textarea">
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>text</dataType>
+                        <label translate="true">Question</label>
+                        <dataScope>question</dataScope>
+                    </settings>
+                    <formElements>
+                        <textarea>
+                            <settings>
+                                <rows>3</rows>
+                            </settings>
+                        </textarea>
+                    </formElements>
+                </field>
+                <field name="answer" formElement="textarea">
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Answer (HTML)</label>
+                        <dataScope>answer</dataScope>
+                    </settings>
+                    <formElements>
+                        <textarea>
+                            <settings>
+                                <rows>8</rows>
+                            </settings>
+                        </textarea>
+                    </formElements>
+                </field>
+                <actionDelete>
+                    <settings>
+                        <additionalClasses>
+                            <class name="data-grid-actions-cell">true</class>
+                        </additionalClasses>
+                        <dataType>text</dataType>
+                        <label translate="true">Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+        <field name="sort_order" sortOrder="50" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Sort order</label>
+                <dataScope>sort_order</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+
+    <fieldset name="visibility" sortOrder="20">
+        <settings>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+            <label translate="true">Who sees it</label>
+        </settings>
+        <field name="store_ids" sortOrder="10" formElement="multiselect">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Store views</label>
+                <dataScope>store_ids</dataScope>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Maxcode\Faq\Model\Source\StoreViews"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="customer_group_ids" sortOrder="20" formElement="multiselect">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Customer groups</label>
+                <dataScope>customer_group_ids</dataScope>
+                <notice translate="true">Leave empty to show the question to everybody.</notice>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Maxcode\Faq\Model\Source\CustomerGroups"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="show_on_page" sortOrder="30" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Show on the FAQ page</label>
+                <dataScope>show_on_page</dataScope>
+                <notice translate="true">Turn it off for a question that only belongs on the product, category or CMS pages chosen below.</notice>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+
+    <fieldset name="assignments" sortOrder="30">
+        <settings>
+            <collapsible>true</collapsible>
+            <opened>false</opened>
+            <label translate="true">Shown on</label>
+        </settings>
+        <field name="category_ids" sortOrder="10" formElement="multiselect">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Categories</label>
+                <dataScope>category_ids</dataScope>
+                <notice translate="true">The question appears in the FAQ block of these category pages.</notice>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Maxcode\Faq\Model\Source\Categories"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="cms_page_ids" sortOrder="20" formElement="multiselect">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">CMS pages</label>
+                <dataScope>cms_page_ids</dataScope>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Maxcode\Faq\Model\Source\CmsPages"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="product_skus" sortOrder="30" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Products (SKU)</label>
+                <dataScope>product_skus</dataScope>
+                <notice translate="true">One SKU per line, or separated by commas. Unknown SKUs are ignored.</notice>
+            </settings>
+            <formElements>
+                <textarea>
+                    <settings>
+                        <rows>4</rows>
+                    </settings>
+                </textarea>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

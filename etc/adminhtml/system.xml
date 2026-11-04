@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="maxcode" translate="label" sortOrder="400">
+            <label>Maxcode</label>
+        </tab>
+        <section id="maxcode_faq" translate="label" sortOrder="26"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>FAQ</label>
+            <tab>maxcode</tab>
+            <resource>Maxcode_Faq::config</resource>
+            <group id="general" translate="label comment" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <comment>Questions and groups are managed under Content > FAQ. The FAQ page, the product, category and CMS blocks and the widget all read the same questions.</comment>
+                <attribute type="expanded">1</attribute>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable the FAQ</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Off: no FAQ page, no block, no widget output and no structured data on the store.</comment>
+                </field>
+            </group>
+            <group id="page" translate="label comment" type="text" sortOrder="20"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>FAQ page</label>
+                <field id="url_key" translate="label comment" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page address</label>
+                    <backend_model>Maxcode\Faq\Model\Config\Backend\UrlKey</backend_model>
+                    <comment>Lower-case letters, digits, hyphens, underscores and slashes (for example "faq" or "help/faq"). Empty: no FAQ page. An address already used by a CMS page or by a URL rewrite (a product, a category, a redirect) is refused: the FAQ page would never be shown there. Changing it does not empty the page cache: flush it.</comment>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page title</label>
+                </field>
+                <field id="meta_title" translate="label" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Meta title</label>
+                </field>
+                <field id="meta_description" translate="label" type="textarea" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Meta description</label>
+                </field>
+            </group>
+            <group id="display" translate="label comment" type="text" sortOrder="30"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Display</label>
+                <field id="block_title" translate="label comment" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title of the blocks</label>
+                    <comment>Heading of the FAQ block on product, category and CMS pages. A widget can set its own title.</comment>
+                </field>
+                <field id="group_titles" translate="label comment" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show group titles</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>On the FAQ page and in widgets. A widget can override it.</comment>
+                </field>
+                <field id="group_tabs" translate="label comment" type="select" sortOrder="25"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter by group</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Round buttons above the groups, each with its number of questions ("All", "Delivery 6"...): a click shows only that group. They need JavaScript and are simply absent without it. Shown when at least two groups have a title. A widget can override it.</comment>
+                </field>
+                <field id="expand_all" translate="label comment" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>"Expand all" button</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>A button that opens or closes every answer. It needs JavaScript and is simply absent without it: the questions open and close without any script.</comment>
+                </field>
+                <field id="on_product" translate="label comment" type="select" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Block on product pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Shows, below the product, the questions assigned to it (question form: "Shown on").</comment>
+                </field>
+                <field id="on_category" translate="label comment" type="select" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Block on category pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="on_cms" translate="label comment" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Block on CMS pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Questions assigned to a CMS page. To put groups of questions inside a page or a block yourself, use the "FAQ (Maxcode)" widget instead.</comment>
+                </field>
+            </group>
+            <group id="seo" translate="label comment" type="text" sortOrder="40"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Structured data</label>
+                <field id="json_ld" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FAQPage markup (JSON-LD)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Describes the displayed questions and answers to search engines, once per page. It does not promise any particular display in search results: Google now shows FAQ rich results only for some sites.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

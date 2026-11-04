@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <maxcode_faq>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <page>
+                <url_key>faq</url_key>
+                <title>Frequently asked questions</title>
+                <meta_title>Frequently asked questions</meta_title>
+                <meta_description></meta_description>
+            </page>
+            <display>
+                <block_title>Frequently asked questions</block_title>
+                <group_titles>1</group_titles>
+                <group_tabs>1</group_tabs>
+                <expand_all>1</expand_all>
+                <on_product>1</on_product>
+                <on_category>1</on_category>
+                <on_cms>1</on_cms>
+            </display>
+            <seo>
+                <json_ld>1</json_ld>
+            </seo>
+        </maxcode_faq>
+    </default>
+</config>
