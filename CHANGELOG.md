@@ -3,6 +3,11 @@
 Toutes les évolutions notables du module sont consignées ici.
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.0.2] - 2026-11-05 — PHP 8.5
+
+### Modifié
+- La contrainte PHP accepte aussi la branche 8.5 (`~8.5.0`), la version de PHP prise en charge par les dernières versions de Magento ; la revue de la Marketplace Adobe l'exige.
+
 ## [1.0.1] - 2026-11-05 — Licence gratuite et contraintes Composer
 
 ### Corrigé
