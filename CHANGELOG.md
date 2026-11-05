@@ -3,6 +3,14 @@
 Toutes les évolutions notables du module sont consignées ici.
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.0.1] - 2026-11-05 — Licence gratuite et contraintes Composer
+
+### Corrigé
+- `LICENSE` contenait le CLUF des modules payants : c'est désormais le CLUF des modules gratuits, comme l'annonce le README.
+
+### Modifié
+- Les dépendances `magento/*` ont des plages de versions au lieu de `*`, comme l'exige la revue de la Marketplace Adobe.
+
 ## [1.0.0] - 2026-11-04 — Première version
 
 Une FAQ unique pour la boutique : une seule à nourrir et à afficher, à la place de Mageprince FAQ et de MageWorx FAQ.
