@@ -67,7 +67,10 @@ class QuestionForm extends AbstractDataProvider
             return [$id ?: '' => $persisted];
         }
         if ($id <= 0) {
-            return [];
+            // Une question de départ peut venir de l'adresse (par exemple une recherche sans résultat de Search Insights).
+            $start = trim(strip_tags((string) $this->request->getParam('question')));
+
+            return $start === '' ? [] : ['' => ['question' => mb_substr($start, 0, 250), 'status' => '0']];
         }
         $question = $this->questionFactory->create();
         $this->questionResource->load($question, $id);

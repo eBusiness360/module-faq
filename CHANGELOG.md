@@ -3,6 +3,11 @@
 Toutes les évolutions notables du module sont consignées ici.
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.1.0] - 2026-11-12
+
+### Ajouté
+- Le formulaire « nouvelle question » accepte une question de départ dans l'adresse (`question=`), par exemple depuis les recherches sans résultat de Maxcode Search Insights : la question arrive pré-remplie, en brouillon.
+
 ## [1.0.2] - 2026-11-05 — PHP 8.5
 
 ### Modifié
