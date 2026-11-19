@@ -38,6 +38,16 @@
     --mcfaq-line: #d2d0c8;
     --mcfaq-border: #6b7280;
     --mcfaq-focus: #1d4ed8;
+    /* Texte posé sur la couleur d'accent ou sur la couleur forte (« × » du bouton ouvert, filtre actif, « Tout ouvrir » survolé). */
+    --mcfaq-on-accent: #fff;
+    --mcfaq-on-strong: #fff;
+    /* Le bouton rond « + » / « × » de chaque question : un thème règle ces six variables pour lui seul. */
+    --mcfaq-icon-color: var(--mcfaq-accent-ink);
+    --mcfaq-icon-border: var(--mcfaq-accent-ink);
+    --mcfaq-icon-bg: var(--mcfaq-surface);
+    --mcfaq-icon-hover-bg: var(--mcfaq-accent-wash);
+    --mcfaq-icon-open-bg: var(--mcfaq-accent-ink);
+    --mcfaq-icon-open-color: var(--mcfaq-on-accent);
     margin: 3rem 0 2rem;
 }
 
@@ -108,7 +118,7 @@
 
 .mcfaq__toggle:hover {
     background: var(--mcfaq-strong);
-    color: #fff;
+    color: var(--mcfaq-on-strong);
 }
 
 .mcfaq__tabs {
@@ -142,7 +152,7 @@
 .mcfaq__tab[aria-pressed="true"] {
     background: var(--mcfaq-strong);
     border-color: var(--mcfaq-strong);
-    color: #fff;
+    color: var(--mcfaq-on-strong);
 }
 
 .mcfaq__count {
@@ -158,7 +168,7 @@
 }
 
 .mcfaq__tab[aria-pressed="true"] .mcfaq__count {
-    background: #fff;
+    background: var(--mcfaq-on-strong);
     color: var(--mcfaq-strong);
 }
 
@@ -225,10 +235,10 @@
     background:
         linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
         linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat,
-        var(--mcfaq-surface);
-    border: 1px solid var(--mcfaq-accent-ink);
+        var(--mcfaq-icon-bg);
+    border: 1px solid var(--mcfaq-icon-border);
     border-radius: 50%;
-    color: var(--mcfaq-accent-ink);
+    color: var(--mcfaq-icon-color);
     content: "";
     flex: 0 0 30px;
     height: 30px;
@@ -237,13 +247,13 @@
 }
 
 .mcfaq__question:hover::after {
-    background-color: var(--mcfaq-accent-wash);
+    background-color: var(--mcfaq-icon-hover-bg);
 }
 
 .mcfaq__item[open] > .mcfaq__question::after {
-    background-color: var(--mcfaq-accent-ink);
-    border-color: var(--mcfaq-accent-ink);
-    color: #fff;
+    background-color: var(--mcfaq-icon-open-bg);
+    border-color: var(--mcfaq-icon-open-bg);
+    color: var(--mcfaq-icon-open-color);
     transform: rotate(45deg);
 }
 

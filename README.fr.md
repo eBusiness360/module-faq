@@ -154,6 +154,8 @@ couleur de thème, même claire, reste lisible ; les couleurs se règlent en que
 avec un « × » blanc dessus ; `--mcfaq-heading` : titres de groupe ; `--mcfaq-strong` : texte, filtre actif, filets
 épais, bouton « Tout ouvrir » ; `--mcfaq-surface` : fond de la liste). Gardez au moins 4,5:1 entre un texte et son fond.
 
+Pour ne restyler que le bouton rond « + » / « × » de chaque question, réglez (tout est facultatif, sur `.mcfaq`) : `--mcfaq-icon-color` (le « + » et son contour ; défaut : l'accent assombri), `--mcfaq-icon-border`, `--mcfaq-icon-bg` (défaut : la surface de la liste), `--mcfaq-icon-hover-bg` (au survol), `--mcfaq-icon-open-bg` (question ouverte) et `--mcfaq-icon-open-color` (le « × » dessus, défaut `--mcfaq-on-accent`, blanc). `--mcfaq-on-strong` est la couleur du texte posé sur `--mcfaq-strong` (filtre actif, « Tout ouvrir » survolé).
+
 ## Journal des modifications
 
 Voir [CHANGELOG.md](CHANGELOG.md).

@@ -153,6 +153,8 @@ in a few lines: `.mcfaq { --mcfaq-accent: #8a1f55; --mcfaq-heading: #5c1238; }` 
 open button, with a white "×" on it; `--mcfaq-heading`: group titles; `--mcfaq-strong`: text, active filter, thick rules, "Expand all" button;
 `--mcfaq-surface`: list background). Keep at least 4.5:1 between a text and its background.
 
+To restyle only the round "+" / "×" button of each question, set (all optional, on `.mcfaq`): `--mcfaq-icon-color` (the "+" and its outline colour; default: darkened accent), `--mcfaq-icon-border`, `--mcfaq-icon-bg` (default: the list surface), `--mcfaq-icon-hover-bg` (on hover), `--mcfaq-icon-open-bg` (when the question is open) and `--mcfaq-icon-open-color` (the "×" on it, default `--mcfaq-on-accent`, white). `--mcfaq-on-strong` is the text colour on `--mcfaq-strong` (active filter, "Expand all" hovered).
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).

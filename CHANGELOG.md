@@ -3,6 +3,11 @@
 Toutes les évolutions notables du module sont consignées ici.
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.2.0] - 2026-11-19
+
+### Ajouté
+- Des variables CSS pour les couleurs qui étaient en dur : `--mcfaq-icon-color`, `--mcfaq-icon-border`, `--mcfaq-icon-bg`, `--mcfaq-icon-hover-bg`, `--mcfaq-icon-open-bg`, `--mcfaq-icon-open-color` (le bouton rond « + » / « × » des questions) et `--mcfaq-on-accent`, `--mcfaq-on-strong` (le blanc posé sur l'accent ou sur la couleur forte). Valeurs par défaut : celles d'avant, rien ne change sans réglage ; un thème n'a plus qu'à surcharger les variables (documentées dans le README).
+
 ## [1.1.1] - 2026-11-19
 
 ### Corrigé
