@@ -1,28 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!-- Sources de données des deux grilles. -->
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="maxcode_faq_question_listing_data_source" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Question\Grid\Collection</item>
-                <item name="maxcode_faq_group_listing_data_source" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Group\Grid\Collection</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Maxcode\Faq\Model\ResourceModel\Question\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">maxcode_faq_question</argument>
-            <argument name="resourceModel" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Question</argument>
-        </arguments>
-    </type>
-    <type name="Maxcode\Faq\Model\ResourceModel\Group\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">maxcode_faq_group</argument>
-            <argument name="resourceModel" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Group</argument>
-        </arguments>
-    </type>
-
     <!-- Colonnes d'actions des grilles. -->
     <virtualType name="Maxcode\Faq\Ui\Component\Listing\Column\QuestionActions" type="Maxcode\Faq\Ui\Component\Listing\Column\Actions">
         <arguments>

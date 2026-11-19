@@ -3,6 +3,11 @@
 Toutes les évolutions notables du module sont consignées ici.
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.1.1] - 2026-11-19
+
+### Corrigé
+- Les grilles de l'administration (commandes, clients, pages CMS…) ne s'affichaient plus quand le module était activé : « Not registered handle sales_order_grid_data_source ». Les sources des deux grilles de la FAQ étaient déclarées dans `etc/adminhtml/di.xml`, ce qui remplaçait celles de tous les autres modules ; elles sont maintenant déclarées dans `etc/di.xml`, et un test l'empêche de revenir.
+
 ## [1.1.0] - 2026-11-12
 
 ### Ajouté

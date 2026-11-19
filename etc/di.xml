@@ -9,4 +9,28 @@
             </argument>
         </arguments>
     </type>
+    <!-- Sources de données des deux grilles de l'administration. Déclarées ICI (portée globale) et jamais dans
+         etc/adminhtml/di.xml : Magento remplace (array_replace) un argument tableau de la portée globale par celui
+         de la portée adminhtml, ce qui effacerait les sources de toutes les autres grilles (commandes, clients…). -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="maxcode_faq_question_listing_data_source" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Question\Grid\Collection</item>
+                <item name="maxcode_faq_group_listing_data_source" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Group\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Maxcode\Faq\Model\ResourceModel\Question\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">maxcode_faq_question</argument>
+            <argument name="resourceModel" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Question</argument>
+        </arguments>
+    </type>
+    <type name="Maxcode\Faq\Model\ResourceModel\Group\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">maxcode_faq_group</argument>
+            <argument name="resourceModel" xsi:type="string">Maxcode\Faq\Model\ResourceModel\Group</argument>
+        </arguments>
+    </type>
+
 </config>
