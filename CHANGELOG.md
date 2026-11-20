@@ -3,6 +3,11 @@
 Toutes les évolutions notables du module sont consignées ici.
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.2.1] — 2026-11-20
+
+### Modifié
+- Documentation : badge de version Packagist dans le README. Aucun changement de code.
+
 ## [1.2.0] - 2026-11-19
 
 ### Ajouté
