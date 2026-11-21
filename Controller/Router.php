@@ -12,6 +12,8 @@ namespace Maxcode\Faq\Controller;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\Action\Forward;
+use Magento\Framework\App\Action\Redirect;
+use Magento\Framework\App\Response\Http as HttpResponse;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\RouterInterface;
 use Magento\Framework\UrlInterface;
@@ -28,11 +30,13 @@ class Router implements RouterInterface
      * @param ActionFactory         $actionFactory Fabrique d'actions.
      * @param Settings              $settings      Réglages de la FAQ.
      * @param StoreManagerInterface $storeManager  Vues de magasin.
+     * @param HttpResponse          $response      Réponse HTTP (redirection de l'adresse avec « / » final).
      */
     public function __construct(
         private readonly ActionFactory $actionFactory,
         private readonly Settings $settings,
-        private readonly StoreManagerInterface $storeManager
+        private readonly StoreManagerInterface $storeManager,
+        private readonly HttpResponse $response
     ) {
     }
 
@@ -41,11 +45,21 @@ class Router implements RouterInterface
      */
     public function match(RequestInterface $request): ?ActionInterface
     {
-        $storeId = (int) $this->storeManager->getStore()->getId();
-        $key = mb_strtolower($this->settings->getUrlKey($storeId));
-        $path = mb_strtolower(trim((string) $request->getPathInfo(), '/'));
+        $store = $this->storeManager->getStore();
+        $storeId = (int) $store->getId();
+        $urlKey = $this->settings->getUrlKey($storeId);
+        $key = mb_strtolower($urlKey);
+        $rawPath = (string) $request->getPathInfo();
+        $path = mb_strtolower(trim($rawPath, '/'));
         if ($key === '' || $path !== $key || !$this->settings->isEnabled($storeId)) {
             return null;
+        }
+        // L'adresse avec « / » final (ou une autre casse) n'est pas une seconde page : 301 vers l'adresse réglée, la seule canonique.
+        if ($rawPath !== '/' . $urlKey) {
+            $this->response->setRedirect($store->getBaseUrl() . $urlKey, 301);
+            $request->setDispatched(true);
+
+            return $this->actionFactory->create(Redirect::class);
         }
         $request->setModuleName('maxcode_faq')->setControllerName('index')->setActionName('index');
         $request->setAlias(UrlInterface::REWRITE_REQUEST_PATH_ALIAS, $path);

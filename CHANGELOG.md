@@ -8,6 +8,16 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versionnage [
 ### Modifié
 - Documentation : badge de version Packagist dans le README. Aucun changement de code.
 
+## [1.2.2] - 2026-11-21
+
+### Corrigé
+- Deux adresses pour une seule page : `/faq` et `/faq/` répondaient toutes deux 200, et la balise canonique d'un site qui ajoute un « / » final aux canoniques (module SEO tiers) s'ajoutait à celle de la FAQ. L'adresse avec « / » final ou une autre casse est maintenant redirigée en 301 vers l'adresse réglée dans la configuration, la seule canonique (qui reste sans « / » final). Le constructeur du routeur reçoit la réponse HTTP : après la mise à jour, `bin/magento setup:di:compile` en mode production.
+
+## [1.2.1] - 2026-11-19
+
+### Modifié
+- Badge de version Packagist dans les README.
+
 ## [1.2.0] - 2026-11-19
 
 ### Ajouté
